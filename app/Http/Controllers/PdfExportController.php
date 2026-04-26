@@ -49,10 +49,12 @@ class PdfExportController extends Controller
         // Apply withdrawal/deposit filters
         if ($request->filled('withdrawal_filter') && !$request->filled('deposit_filter')) {
             // Only show withdrawals
-            $query->whereNotNull('withdrawal_amt');
+            $query->whereNotNull('withdrawal_amt')
+                  ->whereNull('deposit_amt');
         } elseif ($request->filled('deposit_filter') && !$request->filled('withdrawal_filter')) {
             // Only show deposits
-            $query->whereNotNull('deposit_amt');
+            $query->whereNotNull('deposit_amt')
+                  ->whereNull('withdrawal_amt');
         }
         // If both or neither are filled, show all
 

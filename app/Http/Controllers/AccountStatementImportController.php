@@ -212,9 +212,11 @@ class AccountStatementImportController extends Controller
     $showDeposit = $request->filled('deposit_filter');
 
     if ($showWithdrawal && !$showDeposit) {
-        $query->whereNotNull('withdrawal_amt');
+        $query->whereNotNull('withdrawal_amt')
+              ->whereNull('deposit_amt');
     } elseif ($showDeposit && !$showWithdrawal) {
-        $query->whereNotNull('deposit_amt');
+        $query->whereNotNull('deposit_amt')
+              ->whereNull('withdrawal_amt');
     }
 
     // Search in narration
@@ -224,8 +226,9 @@ class AccountStatementImportController extends Controller
     }
 
     // Sort
-    $sortBy = $request->get('sort', 'date');
-    $sortOrder = $request->get('order', 'desc');
+    $allowedSortColumns = ['date', 'narration', 'withdrawal_amt', 'deposit_amt'];
+    $sortBy = in_array($request->get('sort'), $allowedSortColumns, true) ? $request->get('sort') : 'date';
+    $sortOrder = $request->get('order') === 'asc' ? 'asc' : 'desc';
     $query->orderBy($sortBy, $sortOrder);
 
     $statements = $query->get();

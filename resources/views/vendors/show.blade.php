@@ -108,8 +108,8 @@
                     <th class="px-6 py-3 text-left font-semibold text-gray-700">Date</th>
                     <th class="px-6 py-3 text-left font-semibold text-gray-700">Narration</th>
                     <th class="px-6 py-3 text-left font-semibold text-gray-700">Chq/Ref</th>
-                    <th class="px-6 py-3 text-right font-semibold text-gray-700">Amount</th>
-                    <th class="px-6 py-3 text-right font-semibold text-gray-700">Balance</th>
+                    <th class="px-6 py-3 text-right font-semibold text-gray-700">Withdrawal</th>
+                    <th class="px-6 py-3 text-right font-semibold text-gray-700">Deposit</th>
                 </tr>
             </thead>
             <tbody>
@@ -133,10 +133,10 @@
                             {{ $statement->chq_ref_no ?? '-' }}
                         </td>
                         <td class="px-6 py-3 text-right font-semibold text-red-600">
-                            Rs.{{ number_format($statement->withdrawal_amt, 2) }}
+                            {{ $statement->withdrawal_amt ? 'Rs.' . number_format($statement->withdrawal_amt, 2) : '-' }}
                         </td>
-                        <td class="px-6 py-3 text-right font-semibold text-blue-600">
-                            Rs.{{ number_format($statement->closing_balance, 2) }}
+                        <td class="px-6 py-3 text-right font-semibold text-green-600">
+                            {{ $statement->deposit_amt ? 'Rs.' . number_format($statement->deposit_amt, 2) : '-' }}
                         </td>
                     </tr>
                 @empty

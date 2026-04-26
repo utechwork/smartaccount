@@ -158,7 +158,6 @@ class VendorController extends Controller
     public function show(Vendor $vendor)
     {
         $statements = $vendor->statements()
-                            ->whereNotNull('withdrawal_amt')
                             ->orderBy('date', 'desc')
                             ->get();
 

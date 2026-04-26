@@ -1,5 +1,3 @@
-@csrf
-
 <div class="mb-4">
     <div class="flex justify-between items-center mb-2">
         <label for="name" class="block text-gray-700 font-bold">Rule Name</label>
